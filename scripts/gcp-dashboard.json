@@ -1,0 +1,99 @@
+{
+  "displayName": "LearnOneThingAtATime — Blog Visits",
+  "mosaicLayout": {
+    "columns": 12,
+    "tiles": [
+      {
+        "xPos": 0,
+        "yPos": 0,
+        "width": 4,
+        "height": 4,
+        "widget": {
+          "title": "Blog Visits (ReadObject Requests)",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"storage.googleapis.com/api/request_count\" resource.type=\"gcs_bucket\" resource.label.bucket_name=\"learnonethingatatime\" metric.label.method=\"ReadObject\"",
+                "aggregation": {
+                  "alignmentPeriod": "3600s",
+                  "perSeriesAligner": "ALIGN_SUM",
+                  "crossSeriesReducer": "REDUCE_SUM"
+                }
+              },
+              "outputFullDuration": true
+            }
+          }
+        }
+      },
+      {
+        "xPos": 4,
+        "yPos": 0,
+        "width": 4,
+        "height": 4,
+        "widget": {
+          "title": "Outbound Bandwidth (100 GB/mo Free)",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"storage.googleapis.com/network/sent_bytes_count\" resource.type=\"gcs_bucket\" resource.label.bucket_name=\"learnonethingatatime\"",
+                "aggregation": {
+                  "alignmentPeriod": "3600s",
+                  "perSeriesAligner": "ALIGN_SUM",
+                  "crossSeriesReducer": "REDUCE_SUM"
+                }
+              },
+              "outputFullDuration": true
+            }
+          }
+        }
+      },
+      {
+        "xPos": 8,
+        "yPos": 0,
+        "width": 4,
+        "height": 4,
+        "widget": {
+          "title": "Total Storage Used (5 GB Free)",
+          "scorecard": {
+            "timeSeriesQuery": {
+              "timeSeriesFilter": {
+                "filter": "metric.type=\"storage.googleapis.com/storage/total_bytes\" resource.type=\"gcs_bucket\"",
+                "aggregation": {
+                  "alignmentPeriod": "3600s",
+                  "perSeriesAligner": "ALIGN_MEAN",
+                  "crossSeriesReducer": "REDUCE_SUM"
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "xPos": 0,
+        "yPos": 4,
+        "width": 12,
+        "height": 5,
+        "widget": {
+          "title": "Blog Visits Over Time (ReadObject Count)",
+          "xyChart": {
+            "dataSets": [
+              {
+                "timeSeriesQuery": {
+                  "timeSeriesFilter": {
+                    "filter": "metric.type=\"storage.googleapis.com/api/request_count\" resource.type=\"gcs_bucket\" resource.label.bucket_name=\"learnonethingatatime\" metric.label.method=\"ReadObject\"",
+                    "aggregation": {
+                      "alignmentPeriod": "3600s",
+                      "perSeriesAligner": "ALIGN_SUM",
+                      "crossSeriesReducer": "REDUCE_SUM"
+                    }
+                  }
+                },
+                "plotType": "STACKED_BAR"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

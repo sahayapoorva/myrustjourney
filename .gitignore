@@ -1,0 +1,44 @@
+# Rust build artifacts & compiled binaries
+/target/
+**/*.rs.bk
+*.pdb
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.o
+
+# Local binary exports / release bundles
+/bin/
+/dist/
+/build/
+
+# Secrets & local environment configuration
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*credentials*.json
+service-account*.json
+
+# macOS & Editor files
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.iml
+
+# Local bookmarks & links (contains private GCP console / billing IDs)
+LINKS.local.md
+
+# Logs & temporary files
+*.log
+.gcs-logs/
+tmp/
+temp/

@@ -1,0 +1,460 @@
+:root {
+  --bg: #ffffff;
+  --fg: #171717;
+  --prose: #262626;
+  --muted: #525252;
+  --subtle: #737373;
+  --border: #e5e5e5;
+  --code-bg: #fafafa;
+  --hover-bg: #f5f5f5;
+  --selection-bg: #47a3f3;
+  --selection-fg: #fefefe;
+  --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #000000;
+    --fg: #f5f5f5;
+    --prose: #e5e5e5;
+    --muted: #a3a3a3;
+    --subtle: #737373;
+    --border: #262626;
+    --code-bg: #111111;
+    --hover-bg: #171717;
+  }
+}
+
+[data-theme="dark"] {
+  --bg: #000000;
+  --fg: #f5f5f5;
+  --prose: #e5e5e5;
+  --muted: #a3a3a3;
+  --subtle: #737373;
+  --border: #262626;
+  --code-bg: #111111;
+  --hover-bg: #171717;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 15.5px;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+/* ==========================================================================
+   Responsive Single-Column Container (Mobile -> Tablet -> Desktop)
+   ========================================================================== */
+
+/* Mobile default (< 640px) */
+.shell {
+  width: 100%;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.125rem 4rem;
+}
+
+/* Tablet (640px - 1023px) */
+@media (min-width: 640px) {
+  body {
+    font-size: 16px;
+  }
+
+  .shell {
+    padding: 2.75rem 2rem 5rem;
+  }
+}
+
+/* Desktop (>= 1024px) */
+@media (min-width: 1024px) {
+  .shell {
+    max-width: 42rem;
+    padding: 3.5rem 2rem 6rem;
+  }
+}
+
+/* ==========================================================================
+   Minimal Top Navigation
+   ========================================================================== */
+
+.nav-wrap {
+  margin-bottom: 2.75rem;
+  letter-spacing: -0.025em;
+}
+
+@media (min-width: 640px) {
+  .nav-wrap {
+    margin-bottom: 4rem;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-left: -0.5rem;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.15rem 0.25rem;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--fg);
+}
+
+.nav-link.active {
+  font-weight: 500;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  border: none;
+  background: transparent;
+  padding: 0.25rem 0.45rem;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--subtle);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--fg);
+  background: var(--hover-bg);
+}
+
+[data-theme="light"] .theme-label-dark,
+[data-theme="dark"] .theme-label-light {
+  display: none;
+}
+
+/* ==========================================================================
+   Breadcrumbs & Headings
+   ========================================================================== */
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--subtle);
+}
+
+.breadcrumbs a {
+  color: var(--subtle);
+  transition: color 0.15s ease;
+}
+
+.breadcrumbs a:hover {
+  color: var(--fg);
+}
+
+.crumb-sep {
+  opacity: 0.5;
+}
+
+.crumb-current {
+  color: var(--muted);
+}
+
+.page-title {
+  margin: 0 0 1.5rem;
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.04em;
+  color: var(--fg);
+}
+
+@media (min-width: 640px) {
+  .page-title {
+    font-size: 1.625rem;
+    margin-bottom: 1.75rem;
+  }
+}
+
+.post-date {
+  margin: -1.1rem 0 2rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   Prose Typography
+   ========================================================================== */
+
+.prose {
+  color: var(--prose);
+  font-size: 1rem;
+  line-height: 1.72;
+  overflow-wrap: break-word;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose p {
+  margin: 1rem 0;
+}
+
+.prose h2 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.22rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--fg);
+}
+
+.prose h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.06rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+}
+
+.prose strong {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.prose a {
+  text-decoration: underline;
+  text-decoration-color: var(--subtle);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.15s ease;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--fg);
+}
+
+.prose ul,
+.prose ol {
+  margin: 1rem 0;
+  padding-left: 1.35rem;
+}
+
+.prose li {
+  margin: 0.4rem 0;
+}
+
+.prose blockquote {
+  margin: 1.25rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--border);
+  color: var(--muted);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+.prose :not(pre) > code {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.1rem 0.35rem;
+}
+
+.prose pre {
+  margin: 1.25rem 0;
+  padding: 0.9rem 1rem;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+@media (min-width: 640px) {
+  .prose pre {
+    font-size: 0.875rem;
+    padding: 1rem 1.15rem;
+  }
+}
+
+.prose pre code.hljs {
+  background: transparent;
+  padding: 0;
+}
+
+.prose table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.92rem;
+}
+
+.prose th,
+.prose td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.prose th {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* ==========================================================================
+   Folder & Leaf Blog List (Responsive: Stacked on Mobile, 2-Col Tablet/Desktop)
+   ========================================================================== */
+
+.entries {
+  margin: 2rem 0;
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+}
+
+.entry-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.55rem 0.6rem;
+  margin: 0 -0.6rem 0.25rem;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+}
+
+.entry-row:hover {
+  background: var(--hover-bg);
+}
+
+@media (min-width: 640px) {
+  .entry-row {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 0.5rem 0.65rem;
+  }
+}
+
+.entry-meta {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 640px) {
+  .entry-meta {
+    width: 150px;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+  }
+}
+
+.entry-title {
+  margin: 0;
+  color: var(--fg);
+  font-weight: 450;
+  letter-spacing: -0.015em;
+}
+
+.folder-slash {
+  color: var(--subtle);
+  margin-left: 0.15rem;
+}
+
+/* ==========================================================================
+   Minimal Footer
+   ========================================================================== */
+
+.footer {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+@media (min-width: 640px) {
+  .footer {
+    margin-top: 4.5rem;
+  }
+}
+
+.copyright {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.not-found-text {
+  color: var(--muted);
+}

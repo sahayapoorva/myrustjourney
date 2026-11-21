@@ -1,0 +1,27 @@
+[package]
+name = "myrustjourney"
+version = "0.1.0"
+edition = "2024"
+description = "A minimal Rust folder-tree blog where every folder node and every leaf file is a Markdown blog post."
+license = "MIT"
+
+[dependencies]
+anyhow = "1.0"
+askama = "0.13"
+axum = "0.8"
+pulldown-cmark = "0.13"
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+tokio = { version = "1.44", features = ["full"] }
+tower-http = { version = "0.6", features = ["compression-gzip", "fs", "trace"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+http-body-util = "0.1"
+tempfile = "3.19"
+tower = { version = "0.5", features = ["util"] }
+
+[profile.release]
+strip = true
+lto = "thin"

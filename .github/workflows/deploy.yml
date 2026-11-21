@@ -1,0 +1,77 @@
+name: Build & Deploy Static Blog to GCS
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  check-and-build:
+    name: Format, Lint, Test & Build Static Site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+
+      - name: Cache Cargo dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Scan repository for leaked secrets (ripsecrets)
+        run: |
+          cargo install --locked ripsecrets
+          ripsecrets --strict-ignore
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+      - name: Run Clippy
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Run unit & static build tests
+        run: cargo test
+
+      - name: Build static site into dist/
+        run: cargo run -- build
+
+      - name: Upload built static files artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-site
+          path: dist/
+
+  deploy:
+    name: Sync Static Files to Google Cloud Storage
+    needs: check-and-build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.GCS_BUCKET != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download built static files
+        uses: actions/download-artifact@v4
+        with:
+          name: static-site
+          path: dist/
+
+      - name: Authenticate to Google Cloud (Workload Identity Federation)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Sync dist/ to GCS Object Store
+        run: |
+          gcloud storage rsync --recursive --delete-unmatched-destination-objects dist "gs://${{ vars.GCS_BUCKET }}"
+          gcloud storage objects update "gs://${{ vars.GCS_BUCKET }}/**/*.html" --cache-control="public, max-age=60"
+          gcloud storage objects update "gs://${{ vars.GCS_BUCKET }}/static/style.css" --cache-control="public, max-age=300"
