@@ -344,6 +344,27 @@ svg {
   padding: 0;
 }
 
+.mermaid-wrap {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1rem;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  justify-content: center;
+}
+
+.mermaid-wrap .mermaid {
+  min-width: fit-content;
+}
+
+.mermaid-wrap svg {
+  height: auto;
+  display: block;
+}
+
 .prose table {
   display: block;
   width: 100%;
@@ -457,4 +478,220 @@ svg {
 
 .not-found-text {
   color: var(--muted);
+}
+
+/* ==========================================================================
+   Interactive React Architecture Diagrams (static/diagrams.js)
+   ========================================================================== */
+
+.rdiag-card {
+  margin: 1.75rem 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--code-bg);
+  overflow: hidden;
+}
+
+.rdiag-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.rdiag-caption {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--subtle);
+}
+
+.rdiag-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.rdiag-tab {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.rdiag-tab:hover {
+  color: var(--fg);
+  background: var(--hover-bg);
+}
+
+.rdiag-tab.active {
+  background: var(--fg);
+  color: var(--bg);
+  border-color: var(--fg);
+}
+
+.rdiag-flow {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .rdiag-flow {
+    padding: 1.5rem 1.35rem;
+  }
+}
+
+.rdiag-node {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  padding: 0.9rem 1rem;
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.rdiag-node-active {
+  border-color: var(--fg);
+}
+
+.rdiag-node-proxy {
+  border-color: var(--fg);
+  border-width: 1.5px;
+}
+
+.rdiag-node-dim {
+  opacity: 0.48;
+}
+
+.rdiag-node-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.rdiag-node-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+}
+
+.rdiag-pill {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--muted);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.12rem 0.55rem;
+}
+
+.rdiag-node-sub {
+  margin: 0.45rem 0 0;
+  font-size: 0.86rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.rdiag-steps {
+  margin: 0.65rem 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.86rem;
+  color: var(--prose);
+  line-height: 1.55;
+}
+
+.rdiag-steps li {
+  margin: 0.25rem 0;
+}
+
+.rdiag-connector {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 0.45rem 0;
+  color: var(--muted);
+}
+
+.rdiag-connector.is-active {
+  color: var(--fg);
+}
+
+.rdiag-line {
+  width: 1.5px;
+  height: 12px;
+  background: currentColor;
+  opacity: 0.45;
+}
+
+.rdiag-edge-label {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  margin: 0.2rem 0;
+  text-align: center;
+}
+
+.rdiag-arrow-head {
+  margin-top: 0.1rem;
+  opacity: 0.8;
+}
+
+.rdiag-backends {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 520px) {
+  .rdiag-backends {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.rdiag-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.rdiag-badge {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 500;
+  padding: 0.14rem 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: var(--fg);
+  flex-shrink: 0;
+}
+
+.rdiag-note {
+  color: var(--muted);
+  flex: 1;
+  min-width: 200px;
 }

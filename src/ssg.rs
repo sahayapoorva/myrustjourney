@@ -7,6 +7,7 @@ use askama::Template;
 use crate::tree::{NavItem, Node};
 
 const STYLESHEET: &str = include_str!("../static/style.css");
+const DIAGRAMS_JS: &str = include_str!("../static/diagrams.js");
 
 struct NavLink {
     label: String,
@@ -31,6 +32,7 @@ struct ChildEntry {
 struct PageTemplate<'a> {
     site_title: &'a str,
     css_href: String,
+    diagrams_href: String,
     top_nav: Vec<NavLink>,
     breadcrumbs: Vec<CrumbLink>,
     title: &'a str,
@@ -60,8 +62,9 @@ pub fn build_site(content_dir: &Path, out_dir: &Path, site_title: &str) -> Resul
     }
     fs::create_dir_all(out_dir.join("static"))?;
 
-    // Write static stylesheet
+    // Write static assets
     fs::write(out_dir.join("static/style.css"), STYLESHEET)?;
+    fs::write(out_dir.join("static/diagrams.js"), DIAGRAMS_JS)?;
 
     let raw_top_nav = root.top_nav();
     let mut written = 0usize;
@@ -155,6 +158,7 @@ fn render_recursive(
     let html = PageTemplate {
         site_title,
         css_href: format!("{root_prefix}static/style.css"),
+        diagrams_href: format!("{root_prefix}static/diagrams.js"),
         top_nav,
         breadcrumbs,
         title: &node.title,
@@ -318,6 +322,7 @@ mod tests {
             assert!(out.path().join("notes/index.html").is_file());
             assert!(out.path().join("notes/rust/shadowing/index.html").is_file());
             assert!(out.path().join("static/style.css").is_file());
+            assert!(out.path().join("static/diagrams.js").is_file());
         }
     }
 }

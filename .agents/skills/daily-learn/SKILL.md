@@ -79,8 +79,11 @@ Concise explanation in plain English, introducing any unfamiliar term inline.
 ### Style Guidelines
 - Always capitalize the first letter of top navigation and breadcrumb labels
   (e.g., `Home`, `Notes`, `Home / Notes / Rust`, `Dark` / `Light`).
-- Always tag fenced code blocks with their language (e.g. ` ```rust `) so
-  syntax highlighting works cleanly.
+- Always tag fenced code blocks with their language (e.g. ` ```rust `,
+  ` ```nginx `) so syntax highlighting works cleanly. For architecture or
+  system design diagrams, prefer an interactive React component registered in
+  `static/diagrams.js` and mounted via `<div data-diagram="..."></div>` (full
+  width, readable on desktop/tablet/mobile, zero build step).
 - Use short paragraphs, bullet lists, and compact comparison tables over walls
   of text.
 - Highlight subtle quirks/gotchas clearly right next to the concept they affect.
